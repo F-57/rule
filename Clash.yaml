@@ -212,28 +212,28 @@ rule-providers:
 
   AD:
     <<: *RuleProviders
-    url: "https://raw.githubusercontent.com/earoftoast/clash-rules/main/AD.yaml"
-    path: './rules/AD.yaml
+    url: 'https://raw.githubusercontent.com/earoftoast/clash-rules/main/AD.yaml'
+    path: './rules/AD.yaml'
     
   EasyList:
     <<: *RuleProviders
-    url: "https://raw.githubusercontent.com/earoftoast/clash-rules/main/EasyList.yaml"
-    path: './rules/EasyList.yaml
+    url: 'https://raw.githubusercontent.com/earoftoast/clash-rules/main/EasyList.yaml'
+    path: './rules/EasyList.yaml'
     
   EasyListChina:
     <<: *RuleProviders
-    url: "https://raw.githubusercontent.com/earoftoast/clash-rules/main/EasyListChina.yaml"
-    path: './rules/EasyListChina.yaml
+    url: 'https://raw.githubusercontent.com/earoftoast/clash-rules/main/EasyListChina.yaml'
+    path: './rules/EasyListChina.yaml'
 
   EasyPrivacy:
     <<: *RuleProviders
-    url: "https://raw.githubusercontent.com/earoftoast/clash-rules/main/EasyPrivacy.yaml"
-    path: './rules/EasyPrivacy.yaml
+    url: 'https://raw.githubusercontent.com/earoftoast/clash-rules/main/EasyPrivacy.yaml'
+    path: './rules/EasyPrivacy.yaml'
 
   ProgramAD:
     <<: *RuleProviders
-    url: "https://raw.githubusercontent.com/earoftoast/clash-rules/main/ProgramAD.yaml"
-    path: './rules/ProgramAD.yaml
+    url: 'https://raw.githubusercontent.com/earoftoast/clash-rules/main/ProgramAD.yaml'
+    path: './rules/ProgramAD.yaml'
 
 # 规则指向
 rules:
