@@ -167,51 +167,81 @@ rule-providers:
 
   Samsung:
     <<: *RuleProviders
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Samsung/Samsung_No_Resolve.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Samsung/Samsung.yaml'
     path: './rules/Samsung.yaml'
 
   Proxy:
     <<: *RuleProviders
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy_Classical_No_Resolve.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy_Classical.yaml'
     path: './rules/Proxy.yaml'
 
   Google:
     <<: *RuleProviders
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google_No_Resolve.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml'
     path: './rules/Google.yaml'
 
   YouTube:
     <<: *RuleProviders
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube_No_Resolve.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml'
     path: './rules/YouTube.yaml'
 
   TikTok:
     <<: *RuleProviders
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok_No_Resolve.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml'
     path: './rules/TikTok.yaml'
 
   OpenAI:
     <<: *RuleProviders
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI_No_Resolve.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml'
     path: './rules/OpenAI.yaml'
 
   Gemini:
     <<: *RuleProviders
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini_No_Resolve.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.yaml'
     path: './rules/Gemini.yaml'
 
   Telegram:
     <<: *RuleProviders
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram_No_Resolve.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml'
     path: './rules/Telegram.yaml'
 
   GitHub:
     <<: *RuleProviders
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub_No_Resolve.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml'
     path: './rules/GitHub.yaml'
+
+  AD:
+    <<: *RuleProviders
+    url: "https://raw.githubusercontent.com/earoftoast/clash-rules/main/AD.yaml"
+    path: './rules/AD.yaml
+    
+  EasyList:
+    <<: *RuleProviders
+    url: "https://raw.githubusercontent.com/earoftoast/clash-rules/main/EasyList.yaml"
+    path: './rules/EasyList.yaml
+    
+  EasyListChina:
+    <<: *RuleProviders
+    url: "https://raw.githubusercontent.com/earoftoast/clash-rules/main/EasyListChina.yaml"
+    path: './rules/EasyListChina.yaml
+
+  EasyPrivacy:
+    <<: *RuleProviders
+    url: "https://raw.githubusercontent.com/earoftoast/clash-rules/main/EasyPrivacy.yaml"
+    path: './rules/EasyPrivacy.yaml
+
+  ProgramAD:
+    <<: *RuleProviders
+    url: "https://raw.githubusercontent.com/earoftoast/clash-rules/main/ProgramAD.yaml"
+    path: './rules/ProgramAD.yaml
 
 # 规则指向
 rules:
+  - RULE-SET, AD, REJECT
+  - RULE-SET, EasyList, REJECT
+  - RULE-SET, EasyListChina, REJECT
+  - RULE-SET, EasyPrivacy, REJECT
+  - RULE-SET, ProgramAD, REJECT
   - RULE-SET, LAN, DIRECT
   - RULE-SET, China, DIRECT
   - RULE-SET, ChinaMedia, DIRECT
