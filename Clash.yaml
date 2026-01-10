@@ -1,13 +1,10 @@
 # mihomo 配置
-# 日期：2025-11-08 00:21:37
-# 配置作者：https://t.me/iKeLee
 # 适用版本：所有使用 mihomo 核心的程序
 port: 7890
 socks-port: 7891
 mixed-port: 7892
 redir-port: 7893
 tproxy-port: 7894
-
 unified-delay: true
 geodata-mode: false
 geodata-loader: standard
@@ -16,23 +13,21 @@ geo-update-interval: 24
 tcp-concurrent: true
 find-process-mode: strict
 global-client-fingerprint: chrome
-
 allow-lan: true
 mode: rule
 log-level: info
 ipv6: true
 udp: true
-
 external-controller: 0.0.0.0:9090
-
+# 缓解移动设备耗电问题
+# https://github.com/vernesong/OpenClash/issues/2614
+keep-alive-interval: 1800
 geox-url:
   mmdb: 'https://github.ele.xyz/https://github.com/Masaiki/GeoIP2-CN/raw/release/Country.mmdb'
   asn: 'https://github.ele.xyz/https://github.com/P3TERX/GeoLite.mmdb/releases/download/latest/GeoLite2-ASN.mmdb'
-
 profile:
   store-selected: true
   store-fake-ip: true
-
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -158,8 +153,9 @@ rule-providers:
 
   Direct:
     <<: *RuleProviders
-    path: './rules/Direct.yaml'
     url: 'https://github.ele.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct.yaml'
+    path: './rules/Direct.yaml'
+
 
   Samsung:
     <<: *RuleProviders
@@ -173,8 +169,8 @@ rule-providers:
 
   ChinaDownloadCDN:
     <<: *RuleProviders
-    path: './rules/ChinaDownloadCDN.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/ChinaDownloadCDN.yaml'
+    path: './rules/ChinaDownloadCDN.yaml'
 
   Google:
     <<: *RuleProviders
@@ -223,8 +219,8 @@ rule-providers:
 
   ESET_China:
     <<: *RuleProviders
-    path: './rules/ESET_China.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
+    path: './rules/ESET_China.yaml'
 
   AD:
     <<: *RuleProviders
