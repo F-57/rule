@@ -28,7 +28,7 @@ external-controller: 0.0.0.0:9090
 geox-url:
   mmdb: 'https://github.ele.xyz/https://github.com/Masaiki/GeoIP2-CN/raw/release/Country.mmdb'
   asn: 'https://github.ele.xyz/https://github.com/P3TERX/GeoLite.mmdb/releases/download/latest/GeoLite2-ASN.mmdb'
-  
+  geoip: 'https://github.ele.xyz/https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat'
 
 profile:
   store-selected: true
