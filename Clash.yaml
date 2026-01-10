@@ -26,8 +26,9 @@ udp: true
 external-controller: 0.0.0.0:9090
 
 geox-url:
-  mmdb: 'https://geodata.kelee.one/Country-Masaiki.mmdb'
-  asn: 'https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb'
+  mmdb: 'https://github.ele.xyz/https://github.com/Masaiki/GeoIP2-CN/raw/release/Country.mmdb'
+  asn: 'https://github.ele.xyz/https://github.com/P3TERX/GeoLite.mmdb/releases/download/latest/GeoLite2-ASN.mmdb'
+  
 
 profile:
   store-selected: true
