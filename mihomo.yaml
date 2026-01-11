@@ -17,7 +17,7 @@
 # 分组
 pr:
   &pr {
-    type: select,
+    输入: select,
     proxies:
       [
         节点选择,
@@ -93,7 +93,7 @@ rule-providers:
   # https://github.com/privacy-protection-tools/anti-AD
   # 如果误杀率高请自行更换
   anti-AD:
-    type: http
+    输入: http
     behavior: domain
     format: yaml
     # path可为空(仅限clash.meta 1.15.0以上版本)
@@ -102,7 +102,7 @@ rule-providers:
     interval: 600
   # anti-AD 白名单规则
   anti-AD-white:
-    type: http
+    输入: http
     behavior: domain
     format: yaml
     # path可为空(仅限clash.meta 1.15.0以上版本)
