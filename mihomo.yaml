@@ -1,108 +1,34 @@
-# mihomo (Clash Meta) 懒人配置
-# 版本 V1.8-240904
-# https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
-# https://obdo.cc/meta
-# 作者: 笨蛋ovo (bdovo.cc)
-# Telegram: https://t.me/baka_not_baka
-# 关注我的 Telegram 频道谢谢喵 https://t.me/s/BDovo_Channel
-# 修改自官方示例规则 https://wiki.metacubex.one/example/#meta
-# 转载请保留此注释
-# 尽量添加了较为详尽的注释，不理解的地方建议对照 虚空终端 (Clash Meta) Docs 进行理解
-# 虚空终端 (Clash Meta) Docs 地址: https://wiki.metacubex.one
-# 不理解的地方不要乱动，如果你是小白，请按下 `Ctrl + F` 搜索 `基础配置`，只修改此部分
+# mihomo 配置
+port: 7890
+socks-port: 7891
+mixed-port: 7892
+redir-port: 7893
+tproxy-port: 7894
 
-# true 是启用
-# false 是禁用
-
-# 延迟检测 URL
-p: &p
-  type: http
-  # 自动更新订阅时间，单位为秒
-  interval: 3600
-  health-check:
-    enable: true
-    url: https://cp.cloudflare.com
-    # 节点连通性检测时间，单位为秒
-    interval: 300
-    # 节点超时延迟，单位为毫秒
-    timeout: 1000
-    # 节点自动切换差值，单位为毫秒
-    tolerance: 100
-
-# 基础配置
-# --------------------------------------------------
-# 如果你是小白，那么你只需要修改分割线以内的内容
-# 其他部分保持不动即可
-
-# 订阅名，记得修改成自己的
-# 添删订阅在这里和下方订阅链接依葫芦画瓢就行
-use: &use
-  # 如果不希望自动切换请将下面两行注释对调
-  # type: select
-  type: url-test
-  use:
-    - 订阅一
-    - 订阅二
-    # - 本地配置
-
-# 订阅链接
-# 对于订阅来说，path 为选填项，但建议启用
-# 本地配置可以只填 path
-proxy-providers:
-  订阅一:
-    <<: *p
-    url: "https://example.com/airport?type=clashmeta&protocol=shadowsocks&rule=default"
-    path: ./proxy_provider/订阅一.yaml
-
-  订阅二:
-    <<: *p
-    url: "https://example.com/api/v1/client/subscribe?token=ilovechina"
-    path: ./proxy_provider/订阅二.yaml
-
-# 小白请不要继续随意修改以下设置
-# 若需修改请参阅文档 https://wiki.metacubex.one
-
-# 规则订阅
-rule-providers:
-  # anti-AD 广告拦截规则
-  anti-AD:
-    输入: http
-    behavior: domain
-    format: yaml
-    url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml?"
-    path: ./rule_provider/anti-AD.yaml
-    interval: 600
-  # anti-AD 白名单规则
-  anti-AD-white:
-    输入: http
-    behavior: domain
-    format: yaml
-    url: "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml?"
-    path: ./rule_provider/anti-AD-white.yaml
-    interval: 600
-
-mode: rule
-# ipv6 支持
-ipv6: true
-log-level: info
-# 允许局域网连接
-allow-lan: true
-# socks5/http 端口
-mixed-port: 7890
-# Meta 内核特性 https://wiki.metacubex.one/config/general
-# 统一延迟
-# 更换延迟计算方式,去除握手等额外延迟
 unified-delay: true
-# TCP 并发
-# 同时对所有ip进行连接，返回延迟最低的地址
+geodata-mode: false
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 24
 tcp-concurrent: true
-# 外部控制端口
-external-controller: :9090
+find-process-mode: strict
+# 缓解移动设备耗电问题
+# https://github.com/vernesong/OpenClash/issues/2614
+keep-alive-interval: 1800
+# 全局客户端指纹
+global-client-fingerprint: random # 随机指纹
 
-geodata-mode: true
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: true
+udp: true
+
+external-controller: 0.0.0.0:9090
+# external-ui: ui
+# external-ui-url: 'https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip'
 
 # Geo 数据库下载地址
-# 使用代理 (https://github.ele.xyz/)
 # 源地址 https://github.com/MetaCubeX/meta-rules-dat
 # 可以更换镜像站但不要更换其他数据库，可能导致无法启动
 geox-url:
@@ -110,195 +36,147 @@ geox-url:
   geosite: "https://github.ele.xyz/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
   mmdb: "https://github.ele.xyz/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
 
-# 进程匹配模式
-# 路由器上请设置为 off
-# always 开启，强制匹配所有进程
-# strict 默认，由 Clash 判断是否开启
-# off 不匹配进程，推荐在路由器上使用此模式
-find-process-mode: strict
-
-# 缓解移动设备耗电问题
-# https://github.com/vernesong/OpenClash/issues/2614
-keep-alive-interval: 1800
-
-# 全局客户端指纹
-global-client-fingerprint: random # 随机指纹
-
-# 缓存
 profile:
   store-selected: true
   store-fake-ip: true
 
-# 自动同步时间以防止时间不准导致无法正常联网
-ntp:
-  enable: true
-  # 是否同步至系统时间，需要 root/管理员权限
-  write-to-system: false
-  server: time.apple.com
-  port: 123
-  interval: 30
-
-# 域名嗅探
 sniffer:
   enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
   sniff:
-    TLS:
-      ports: [443, 8443]
     HTTP:
       ports: [80, 8080-8880]
       override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
 
-# tun 模式
+  skip-domain:
+    - Mijia Cloud
+
 tun:
-  enable: false  # enable 'true'
-  stack: system  # or 'gvisor'
+  enable: true
+  stack: system
   dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
+    - any:53
   auto-route: true
   auto-detect-interface: true
 
-# dns 设置
-# 已配置 ipv6
+# P2P下载端口
+listeners:
+- name: socks5-in-1
+  输入: socks
+  port: 10808
+  listen: 0.0.0.0
+  udp: true
+  用户: []
+  proxy: DIRECT
+
 dns:
   enable: true
-  listen: :1053
-  ipv6: true
-  # 路由器个人建议使用 redir-host 以最佳兼容性
-  # 其他设备可以使用 fake-ip
-  enhanced-mode: redir-host
+  prefer-h3: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  enhanced-mode: fake-ip
   fake-ip-range: 28.0.0.1/8
   fake-ip-filter:
-    - '*'
-    - '+.lan'
-    - '+.local'
+    - "*"
+    - +.lan
   default-nameserver:
     - 223.5.5.5
-    - 119.29.29.29
-    - 114.114.114.114
-    - '[2402:4e00::]'
-    - '[2400:3200::1]'
+    - 223.6.6.6
   nameserver:
-    - 'tls://8.8.4.4#dns'
-    - 'tls://1.0.0.1#dns'
-    - 'tls://[2001:4860:4860::8844]#dns'
-    - 'tls://[2606:4700:4700::1001]#dns'
-  proxy-server-nameserver:
-    - https://doh.pub/dns-query
-  nameserver-policy:
-    "geosite:cn,private":
-      - https://doh.pub/dns-query
-      - https://dns.alidns.com/dns-query
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
 
-# 多入站端口设置
-# listeners:
-#   - name: hk
-#     type: mixed
-#     port: 12991
-#     proxy: 香港
+# 锚点 - 节点订阅的参数 [每小时更新一次订阅节点，每 6 秒一次健康检查]
+NodeParam: &NodeParam {输入: http, interval: 3600, health-check: {enable: true, url: 'http://www.google.com/blank.html', interval: 6}}
 
-#   - name: tw
-#     type: mixed
-#     port: 12992
-#     proxy: 台湾
+# 锚点 - 节点订阅
+proxy-providers: 
+  机场名称1:
+    url: '机场1的订阅URL'
+    <<: *NodeParam
+    path: './proxy_providers/机场名称1.yaml'
+    override:
+      additional-prefix: "[机场名称1] " # 为订阅节点添加机场名称前缀
+  机场名称2:
+    url: '机场2的订阅URL'
+    <<: *NodeParam
+    path: './proxy_providers/机场名称2.yaml'
+    override:
+      additional-prefix: "[机场名称2] " # 为订阅节点添加机场名称前缀
 
-#   - name: sg
-#     type: mixed
-#     port: 12993
-#     proxy: 新加坡
+# 锚点 - 节点筛选组
+FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterTW: &FilterTW '^(?=.*((?i)🇹🇼|台湾|(\b(TW|TWN|Tai|Taiwan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterJP: &FilterJP '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|JPN|Japan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterKR: &FilterKR '^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|KOR|Korea)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterSG: &FilterSG '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|SGP|Singapore)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterUS: &FilterUS '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|USA|United States)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterUK: &FilterUK '^(?=.*((?i)🇬🇧|英国|伦敦|(\b(UK|GBR|United Kingdom)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterFR: &FilterFR '^(?=.*((?i)🇫🇷|法国|(\b(FR|FRA|France)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterDE: &FilterDE '^(?=.*((?i)🇩🇪|德国|(\b(DE|DEU|Germany)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterGame: &FilterGame '^(?=.*((?i)游戏|🎮|(\b(GAME)(\d+)?\b)))(?!.*((?i)回国|校园)).*$'
+FilterAll: &FilterAll '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|邀请|好友|失联|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
 
-proxies:
-  # - name: "WARP"
-  #   type: wireguard
-  #   server: engage.cloudflareclient.com
-  #   port: 2408
-  #   ip: "172.16.0.2/32"
-  #   ipv6: "2606::1/128"        # 自行替换
-  #   private-key: "private-key" # 自行替换
-  #   public-key: "public-key"   # 自行替换
-  #   udp: true
-  #   reserved: "abba"           # 自行替换
-  #   mtu: 1280
-  #   dialer-proxy: "WARP前置"
-  #   remote-dns-resolve: true
-  #   dns:
-  #     - https://dns.cloudflare.com/dns-query
+# 策略组参数锚点
+# 锚点 - 时延优选参数 [每 6 秒一次惰性健康检查，容差 20ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+UrlTest: &UrlTest {type: url-test, interval: 6, tolerance: 20, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+# 锚点 - 故障转移参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+FallBack: &FallBack {type: fallback, interval: 6, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+# 锚点 - 负载均衡参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'http://www.google.com/blank.html', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all-providers: true}
+# 锚点 - 规则参数 [每小时更新一次订阅规则，更新规则时使用直连策略]
+RuleProviders: &RuleProviders {type: http, behavior: classical, interval: 3600, format: yaml, proxy: DIRECT}
 
-proxy-groups:
-  # 使用 WARP 的用户需要手动在下方的 proxies 字段内添加 WARP
-  # 例如 [WARP, 全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, DIRECT],
-  - {
-      name: 节点选择,
-      输入: select,
-      proxies:
-        [全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, DIRECT],
-    }
-  # 这里的 dns 指海外解析 dns 走的节点，一般跟随节点选择即可
-  - { name: dns, <<: *pr }
-  - { name: 广告拦截, type: select, proxies: [REJECT, DIRECT, 节点选择] }
-  - { name: OpenAI, <<: *pr }
-  # Apple 推荐走全局直连
-  - { name: Apple, <<: *pr }
-  - { name: Google, <<: *pr }
-  - { name: Telegram, <<: *pr }
-  - { name: Twitter, <<: *pr }
-  - { name: Pixiv, <<: *pr }
-  - { name: ehentai, <<: *pr }
-  # 下面两个看需求启用，打开之后会代理全站流量，可能导致部分版权视频反而无法播放或视频播放速度缓慢
-  # 下面 rules 两条也要启用
-# - {name: 哔哩哔哩, <<: *pr}
-# - {name: 哔哩东南亚, <<: *pr}
-  - { name: 巴哈姆特, <<: *pr }
-  - { name: YouTube, <<: *pr }
-  - { name: NETFLIX, <<: *pr }
-  - { name: Spotify, <<: *pr }
-  - { name: Github, <<: *pr }
-  - { name: Steam, <<: *pr }
-  - { name: OneDrive, <<: *pr }
-  - { name: 微软服务, <<: *pr }
-  - {
-      name: 国内,
-      输入: select,
-      proxies:
-        [
-          DIRECT,
-          节点选择,
-          香港,
-          台湾,
-          日本,
-          新加坡,
-          美国,
-          其它地区,
-          全部节点,
-          自动选择,
-        ],
-    }
-  # 其他就是所有规则没匹配到的
-  # 可以理解为 ACL4SSR 配置里的 漏网之鱼
-  # 换言之，其他走代理就是绕过中国大陆地址，不走就是 GFWList 模式
-  - { name: 其他, <<: *pr }
+# 策略组
+proxy-groups: 
+  - {name: 广告拦截, type: select, proxies: [REJECT, DIRECT]}
+  - {name: 境外AI, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
+  - {name: Apple, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
+  - {name: Google, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
+  - {name: Telegram, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
+  - {name: Twitter, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
+  - {name: YouTube, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
+  - {name: TikTok, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
+  - {name: Github, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
+  - {name: Steam, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
+  - {name: OneDrive, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
+  - {name: 国内, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
+  - {name: 其他, type: select, proxies: [DIRECT, 香港自动策略, 台湾自动策略, 日本自动策略, 韩国自动策略, 新国自动策略, 美国自动策略, 英国自动策略, 法国自动策略, 德国自动策略]}
 
-  # 分隔,下面是地区分组
-  - { name: 香港, <<: *use, filter: "(?i)港|hk|hongkong|hong kong" }
-  - { name: 台湾, <<: *use, filter: "(?i)台|tw|taiwan" }
-  - { name: 日本, <<: *use, filter: "(?i)日本|jp|japan" }
-  - { name: 美国, <<: *use, filter: "(?i)美|us|unitedstates|united states" }
-  - { name: 新加坡, <<: *use, filter: "(?i)(新|sg|singapore)" }
-  - {
-      name: 其它地区,
-      <<: *use,
-      filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*",
-    }
-  - { name: 全部节点, <<: *use }
-  - { name: 自动选择, <<: *use, tolerance: 2, type: url-test }
+  - {name: 香港自动策略, <<: *UrlTest, filter: *FilterHK}
+  - {name: 台湾自动策略, <<: *UrlTest, filter: *FilterTW}
+  - {name: 日本自动策略, <<: *UrlTest, filter: *FilterJP}
+  - {name: 韩国自动策略, <<: *UrlTest, filter: *FilterKR}
+  - {name: 新国自动策略, <<: *UrlTest, filter: *FilterSG}
+  - {name: 美国自动策略, <<: *UrlTest, filter: *FilterUS}
+  - {name: 英国自动策略, <<: *UrlTest, filter: *FilterUK}
+  - {name: 法国自动策略, <<: *UrlTest, filter: *FilterFR}
+  - {name: 德国自动策略, <<: *UrlTest, filter: *FilterDE}
 
+# 订阅规则
+rule-providers:
+  # 秋风广告拦截规则
+  AWAvenue-Ads:
+  <<: *RuleProviders
+  path: './rules/AWAvenue-Ads.yaml'
+  url: 'https://github.ele.xyz/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Classical.yaml'
+
+# 规则指向
 rules:
   # 若需禁用 QUIC 请取消注释 QUIC 两条规则
   # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
-
-# - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # quic
-  - AND,((RULE-SET,anti-AD),(NOT,((RULE-SET,anti-AD-white)))),广告拦截 # 感谢 Telegram @nextyahooquery 提供的建议
-  - GEOSITE,openai,OpenAI
+# - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT
+# - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT
+  - RULE-SET,AWAvenue-Ads,广告拦截
+  - GEOSITE,category-scholar-!cn,境外AI
   - GEOSITE,apple,Apple
   - GEOSITE,apple-cn,Apple
   - GEOSITE,github,Github
@@ -307,16 +185,21 @@ rules:
   - GEOSITE,google,Google
   - GEOSITE,google-cn,Google # Google CN 不走代理会导致香港等地区节点 Play Store 异常
   - GEOSITE,telegram,Telegram
-  - GEOSITE,samsung,DIRECT
+  - GEOSITE,tiktok,TikTok
   - GEOSITE,steam@cn,DIRECT
   - GEOSITE,steam,Steam
   - GEOSITE,onedrive,OneDrive
   - GEOSITE,microsoft,微软服务
   - GEOSITE,geolocation-!cn,其他
-# - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT # quic
   - GEOIP,google,Google
   - GEOIP,telegram,Telegram
   - GEOIP,twitter,Twitter
   - GEOSITE,CN,国内
   - GEOIP,CN,国内
+  # 绕过局域网地址
+  - IP-CIDR,10.0.0.0/8,DIRECT
+  - IP-CIDR,172.16.0.0/12,DIRECT
+  - IP-CIDR,192.168.0.0/16,DIRECT
+  - IP-CIDR,100.64.0.0/10,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT
   - MATCH,其他
