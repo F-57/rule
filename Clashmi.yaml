@@ -179,7 +179,7 @@ proxy-groups:
 # ※※※※※※※※※※※※※※※ 规则匹配 ※※※※※※※※※※※※※※※
 rules:
    # 服务分流
-  - RULE-SET,Ads_domain,DIRECT
+  - RULE-SET,Ads_domain,REJECT
   - RULE-SET,private_ip,DIRECT,no-resolve
   - RULE-SET,private_domain,DIRECT
   - RULE-SET,speedtest_domain,Speedtest
